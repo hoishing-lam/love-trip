@@ -1,0 +1,11 @@
+html,
+body,
+#app,
+.van-config-provider {
+  height: 100%;
+}
+
+#app .amap-logo,
+#app .amap-copyright {
+  display: none !important;
+}
