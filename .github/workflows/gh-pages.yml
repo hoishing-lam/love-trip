@@ -1,0 +1,40 @@
+name: GitHub Pages
+
+on:
+  # https://github.com/orgs/community/discussions/26724
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md' # 只更改 md 文件不触发
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3 # 相当于 git clone 到当前运行的机器上
+      - name: Installation
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.12.3 # 指定 pnpm 版本
+          run_install: true # pnpm install dependencies recursively
+      - name: Build
+        run: |
+          pnpm run build
+          touch out/.nojekyll
+        # jekyll 不会处理以 _ 开头的文件，需要在 gh-pages 根目录下添加文件 .nojekyll 以禁止使用 jekyll 解析
+        # https://segmentfault.com/q/1010000019587945
+        # https://stackoverflow.com/questions/66764842/how-can-i-fix-404-error-importing-css-on-github-pages
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          folder: out
+          # 当前使用的是 ACCESS_TOKEN，另一种可选方案是 personal access token
+          # ACCESS_TOKEN 属性名，必须与仓库 secret 名保持一致
+          # 查看：https://github.com/hoishing-lam/love-trip/settings/secrets/actions
+          # 该 token 是 personal access token，至少需要本项目的代码修改权限
+          # 查看：https://github.com/settings/tokens?type=beta
+          # repository permissions -> contents: Read and Write
+          token: ${{ secrets.ACCESS_TOKEN }}
+          branch: gh-pages
