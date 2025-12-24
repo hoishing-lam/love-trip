@@ -160,10 +160,10 @@ watch([visible, searchRef], ([visible, searchRef]) => {
   opacity: 0;
   transition: all 0.4s;
   background-color: #fff;
-  &--visible {
-    z-index: 15;
-    opacity: 1;
-  }
+}
+.footprints-search__container--visible {
+  z-index: 15;
+  opacity: 1;
 }
 .footprints-search__list {
   flex: 1;

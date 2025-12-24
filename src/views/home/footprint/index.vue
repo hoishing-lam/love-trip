@@ -7,7 +7,7 @@
       shape="round"
       placeholder="找下我们去过的地方叭~"
       background="transparent"
-      @focus="openSearch"
+      @focus="handleFocusSearch"
     />
     <div ref="mapContainerRef" class="footprints-map__container" />
     <Search
@@ -114,7 +114,11 @@ const selectedFootprint = ref<Footprint>();
 const mapContainerRef = ref<HTMLElement>();
 const searchRef = ref<SearchInstance>();
 const query = ref('');
-const searchVisible = ref(false);
+const {
+  state: searchVisible,
+  setTrue: openSearch,
+  setFalse: closeSearch
+} = useBoolean();
 
 const { scene, loadMap } = useMap({
   onSuccess: scene => {
@@ -133,13 +137,9 @@ const commonRegionPointLayerStyle = {
   blurWidth: 2
 };
 
-function openSearch() {
+function handleFocusSearch() {
   searchRef.value?.blur();
-  searchVisible.value = true;
-}
-
-function closeSearch() {
-  searchVisible.value = false;
+  openSearch();
 }
 
 function renderRoutes(scene: Scene, routes: Route[]) {
