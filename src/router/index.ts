@@ -5,6 +5,7 @@ import {
   type RouteLocationNormalizedGeneric
 } from 'vue-router';
 import { PUBLIC_PATH } from '@/constants';
+import { useAuthStore } from '@/modules/auth';
 
 function mapRouteToProps(route: RouteLocationNormalizedGeneric) {
   return {
@@ -15,13 +16,41 @@ function mapRouteToProps(route: RouteLocationNormalizedGeneric) {
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/hello-world',
-    component: () => import('@/views/hello-world.vue'),
-    props: mapRouteToProps
+    path: '/',
+    component: () => import('@/views/home/index.vue'),
+    redirect: '/timeline',
+    children: [
+      {
+        path: 'timeline',
+        component: () => import('@/views/home/timeline/index.vue'),
+        props: mapRouteToProps
+      }
+    ]
+  },
+  {
+    path: '/signin',
+    component: () => import('@/views/signin/index.vue')
   }
 ];
 
 export const router = createRouter({
   history: createWebHistory(PUBLIC_PATH),
   routes
+});
+
+router.beforeEach((to, _, next) => {
+  const { token } = useAuthStore();
+  if (to.path === '/signin') {
+    if (token) {
+      next('/');
+    } else {
+      next();
+    }
+  } else {
+    if (token) {
+      next();
+    } else {
+      next('/signin');
+    }
+  }
 });
