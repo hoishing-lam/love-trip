@@ -1,0 +1,1 @@
+import{a0 as p,ar as n,as as e,w as u}from"./index-D5cxyobe.js";function c(o,{args:t=[],done:s,canceled:a,error:f}){if(o){const i=o.apply(null,t);p(i)?i.then(l=>{l?s():a&&a()}).catch(f||n):i?s():a&&a()}else s()}const r=Symbol();function m(o){const t=e(r,null);t&&u(t,s=>{s&&o()})}export{r as P,c,m as o};
