@@ -26,6 +26,13 @@ jobs:
         # jekyll 不会处理以 _ 开头的文件，需要在 gh-pages 根目录下添加文件 .nojekyll 以禁止使用 jekyll 解析
         # https://segmentfault.com/q/1010000019587945
         # https://stackoverflow.com/questions/66764842/how-can-i-fix-404-error-importing-css-on-github-pages
+      
+        # 由于 github pages 默认不支持 SPA 的路由模式
+        # 当直接访问路由时，GitHub Pages 会尝试寻找对应的静态文件，找不到就会返回 404
+        # 所以可以在 CI 中复制一个 404.html，如此 gitub pages 就会使用这个 404.html
+      - name: Add 404 Page
+        run: |
+          cp dist/index.html dist/404.html
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
