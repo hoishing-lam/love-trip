@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { Lazyload } from 'vant';
 
 import { router } from './router';
 import App from './app.vue';
@@ -8,7 +9,7 @@ import './assets/styles/reset.css';
 import './assets/styles/global.css';
 
 function bootstrap() {
-  createApp(App).use(createPinia()).use(router).mount('#app');
+  createApp(App).use(createPinia()).use(router).use(Lazyload).mount('#app');
 }
 
 bootstrap();

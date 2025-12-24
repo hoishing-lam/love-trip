@@ -24,7 +24,12 @@ const routes: RouteRecordRaw[] = [
         path: 'timeline',
         component: () => import('@/views/home/timeline/index.vue'),
         props: mapRouteToProps
-      }
+      },
+      {
+        path: 'footprint',
+        component: () => import('@/views/home/footprint/index.vue'),
+        props: mapRouteToProps
+      },
     ]
   },
   {
