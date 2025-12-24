@@ -29,7 +29,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          folder: out
+          folder: dist
           # 当前使用的是 ACCESS_TOKEN，另一种可选方案是 personal access token
           # ACCESS_TOKEN 属性名，必须与仓库 secret 名保持一致
           # 查看：https://github.com/hoishing-lam/love-trip/settings/secrets/actions
