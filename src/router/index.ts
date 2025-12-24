@@ -34,6 +34,11 @@ const routes: RouteRecordRaw[] = [
         path: 'wish',
         component: () => import('@/views/home/wish/index.vue'),
         props: mapRouteToProps
+      },
+      {
+        path: 'setting',
+        component: () => import('@/views/home/setting/index.vue'),
+        props: mapRouteToProps
       }
     ]
   },
