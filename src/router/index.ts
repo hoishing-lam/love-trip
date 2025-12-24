@@ -30,6 +30,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/footprint/index.vue'),
         props: mapRouteToProps
       },
+      {
+        path: 'wish',
+        component: () => import('@/views/home/wish/index.vue'),
+        props: mapRouteToProps
+      }
     ]
   },
   {
