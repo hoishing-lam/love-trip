@@ -31,11 +31,16 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useBoolean } from '@/hooks';
+import { parseURL } from '@/utils';
 import { useAuthStore, LOGIN_SECRET } from '@/modules/auth';
 
 defineOptions({
   name: 'Signin'
 });
+
+const props = defineProps<{
+  to?: string;
+}>();
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -65,7 +70,8 @@ function handleDeleteSecret() {
 function login() {
   if (secret.value === LOGIN_SECRET) {
     authStore.setToken('true');
-    router.push('/');
+    const toFullPath = decodeURIComponent(props.to || '/');
+    router.push(parseURL(toFullPath));
   } else {
     errorMsg.value = '密码错误';
   }
