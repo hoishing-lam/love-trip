@@ -4,7 +4,7 @@ on:
   # https://github.com/orgs/community/discussions/26724
   push:
     branches:
-      - dev
+      - main
     paths-ignore:
       - '**.md' # 只更改 md 文件不触发
 
