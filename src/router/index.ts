@@ -2,10 +2,14 @@ import {
   createRouter,
   createWebHistory,
   type RouteRecordRaw,
-  type RouteLocationNormalizedGeneric
+  type RouteLocationNormalizedGeneric,
+  type Router
 } from 'vue-router';
 import { PUBLIC_PATH } from '@/constants';
 import { useAuthStore } from '@/modules/auth';
+import { parseURL } from '@/utils';
+
+const signinPath = '/signin';
 
 function mapRouteToProps(route: RouteLocationNormalizedGeneric) {
   return {
@@ -43,8 +47,9 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/signin',
-    component: () => import('@/views/signin/index.vue')
+    path: signinPath,
+    component: () => import('@/views/signin/index.vue'),
+    props: mapRouteToProps
   }
 ];
 
@@ -53,19 +58,25 @@ export const router = createRouter({
   routes
 });
 
-router.beforeEach((to, _, next) => {
-  const { token } = useAuthStore();
-  if (to.path === '/signin') {
-    if (token) {
-      next('/');
+export function setRouterGuard(router: Router) {
+  router.beforeEach((to, _, next) => {
+    const { token } = useAuthStore();
+    if (to.path === signinPath) {
+      if (token) {
+        const redirectTo = (to.query.to as string) || '/';
+        next(parseURL(redirectTo));
+      } else {
+        next();
+      }
     } else {
-      next();
+      if (token) {
+        next();
+      } else {
+        next({
+          path: signinPath,
+          query: { to: encodeURIComponent(to.fullPath) }
+        });
+      }
     }
-  } else {
-    if (token) {
-      next();
-    } else {
-      next('/signin');
-    }
-  }
-});
+  });
+}
