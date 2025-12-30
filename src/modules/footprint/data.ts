@@ -2210,10 +2210,10 @@ export const footprints: Array<Spot | Route> = [
     id: 'FO520',
     category: 'spot',
     type: 'heart',
-    name: '荔湾湖',
+    name: '富力海珠城',
     city: '广州',
-    lng: 113.232762,
-    lat: 23.119902,
+    lng: 113.274172,
+    lat: 23.095433,
     boyDesc:
       '今天会是个特别的日子哦~猪猪答应了我的求婚，从今天起就是我的未婚妻啦！未来一起加油，一起努力，这会是新的开始。'
   }
